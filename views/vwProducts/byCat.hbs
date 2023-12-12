@@ -1,0 +1,68 @@
+ 
+<style>
+   #d {
+    
+    width:350px;
+    box-shadow:  5px 5px 5px thistle;
+   font-weight: bold;
+   margin: 25px
+   
+}</style>
+ <div class="card">
+  <h5 class="card-header">
+       Tìm kiếm
+  
+  </h5>
+<div class="card-body">
+  {{#if this.empty}}
+   <p class="card-text">
+      Không có kết quả
+    </p>
+  {{else}}
+  <div class="row">
+ {{#each this.products}}
+     
+      <div  id="d"class="row" >
+		<div class="col-md-6" >
+			<a  href="/products/sp/{{ProName}}">
+				<img class="img-fluid" src="{{pic}}" width="150" height="120">
+			</a>
+		</div>
+		<div  class="col-md-6">
+			
+			<a style="color:black"  href="/products/sp/{{ProID}}" ><h3>{{ProName}}</h3>
+			<h4></h4>
+			<p>{{TinyDes}}</p></a>
+       <small>{{CreatedAt}}</small>
+		</div>
+	</div>
+      
+  {{/each}}
+  </div>
+  <div class="row">
+      <div class="col-sm-12">
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+            
+            {{#each this.page_numbers}}
+            {{#if active}}
+            <li class="page-item active" aria-current="page">
+              <span class="page-link">
+                {{value}}
+                <span class="sr-only">(current)</span>
+              </span>
+            </li>
+            {{else}}
+            <li class="page-item">
+              <a class="page-link" href="?page={{value}}">{{value}}</a>
+            </li>
+            {{/if}}
+            {{/each}}
+          
+          </ul>
+        </nav>
+      </div>
+    </div>
+  {{/if}}
+</div>
+</div>

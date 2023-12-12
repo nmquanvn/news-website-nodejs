@@ -1,0 +1,134 @@
+{{#if admin}}
+<style>
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#myInput").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#tbsubcats tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
+<form id="formEdit" action="/categories/edit/update" method="POST">
+  <div class="card shadow">
+    <h5 class="card-header">
+      Edit Category
+    </h5>
+    <div class="card-body">
+      {{#if this.error}}
+      <div class="alert alert-danger" role="alert">
+        Invalid categoryId. <a href="/user/{{authUser.f_ID}}/categories" class="alert-link">Back to List</a>.
+      </div>
+      {{else}}
+      <div class="form-group">
+        <label for="txtCatID">#</label>
+        <input readonly type="text" class="form-control" id="txtCatID" name="CatID" value="{{this.category.CatID}}">
+      </div>
+      <div class="form-group">
+        <label for="txtCatName">Tên danh mục</label>
+        <input type="text" class="form-control" id="txtCatName" name="CatName" value="{{this.category.CatName}}">
+      </div>
+      <div class="form-group">
+        <label for="txtCatName">Biên tập viên phụ trách</label>
+        <input readonly type="text" class="form-control" id="txtEditor" name="Temp" value="{{userName}}">
+      </div>
+      <div class="form-group">
+        <label for="txtCatName">Điều chỉnh biên tập viên cho chuyên mục</label>
+        <select class="form-control" name="editor_id" id="user" onChange="myNewFunction(this);">
+          {{#each lcUsers.[3].users}}
+          <option value="{{user_id}}">{{user_name}}</option>
+          {{/each}}
+        </select>
+        <script>
+          var text1 = element.options[element.selectedIndex].text;
+             document.getElementById("editor_name").value = text1;
+        </script>
+        <input type="hidden" id="editor_name" name="editor_name">
+        <script>
+          function myNewFunction(element) {
+            var text = element.options[element.selectedIndex].text;
+             document.getElementById("editor_name").value = text;
+          }
+         
+        </script>
+      </div>
+
+      {{/if}}
+    </div>
+    <div class="card-footer text-right">
+      <a class="btn btn-outline-primary" href="/user/{{authUser.f_ID}}/categories" role="button" title="Back">
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        List
+      </a>
+      {{#unless this.error}}
+      <button type="submit" class="btn btn-danger" formaction="/categories/delete">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+        Delete
+      </button>
+      <button type="submit" class="btn btn-success">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Save
+      </button>
+    </div>
+    {{/unless}}
+    {{#unless this.error}}
+    <div class="card">
+      <div class="card-header">
+        <div class="header">
+          <h5>Sub Category</h5>
+          <input id="myInput" type="text" placeholder="Search..">
+        </div>
+      </div>
+      <table name="tbSubCat" class="table table-hover table-dark table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Sub Categories</th>
+            <th scope="col" class="text-right">
+              <a class="btn btn-outline-success btn-sm" href="/categories/add/{{this.category.CatID}}" role="button"
+                title="Add">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Add Sub Category
+              </a>
+            </th>
+
+          </tr>
+        </thead>
+        <tbody id="tbsubcats">
+          {{#each subcat}}
+          <tr class='clickable-row'>
+            <th scope="row">{{subID}}</th>
+            <td>{{subName}}</td>
+            <td class="text-right">
+              <a class="btn btn-primary btn-sm" href="/categories/edit/{{CatID}}/{{subID}}" role="button" title="Edit">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </a>
+              <a class="btn btn-danger btn-sm" href="javascript:;" onclick="doPreview();" role="button" title="Delete">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </a>
+              <script>
+                function doPreview() {
+                  form = document.getElementById('formEdit');
+                  form.action = '/categories/{{CatID}}/delete/{{subID}}';
+                  form.submit();
+                }
+              </script>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    {{/unless}}
+  </div>
+  </div>
+</form>
+{{/if}}

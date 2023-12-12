@@ -1,0 +1,33 @@
+ {{#if admin}}
+ {{#if this.error}}
+      <div class="alert alert-danger" role="alert">
+        Invalid categoryId. <a href="/categories/{{CatID}}" class="alert-link">Back to Category</a>.
+      </div>
+{{else}}
+ <div class="card shadow h-100">
+  <h5 class="card-header">
+    Categories 
+  
+  </h5>
+<div class="card-body">
+  <div class="row">
+    <div class="col-sm-6">
+<form action="" method="POST"> 
+  <div class="form-group" >
+    <label for="txtCatName">Category ID</label>
+    <input readonly type="text" class="form-control" id="txtCatName" name="CatID" value="{{CatID}}">
+    <label for="txtCatName">Sub Category Name</label>
+    <input type="text" class="form-control" id="txtCatName" name="subName" >
+ </div>
+  <button type="submit" class="btn btn-success">
+    <i class="fa fa-check" aria-hidden="true"></i>
+    Save 
+  </button>
+</form>
+    </div>
+  </div>
+    
+  </div>
+</div>
+{{/if}}
+{{/if}}

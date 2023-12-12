@@ -1,0 +1,110 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tbcats tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+<div class="main-panel">
+    <nav class="navbar navbar-default navbar-fixed">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Table List</a>
+            </div>
+            <div class="collapse navbar-collapse">
+               
+
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    
+                    <li>
+                        <a href="/account/logout">
+                            <p>Log out</p>
+                        </a>
+                    </li>
+                    <li class="separator hidden-lg hidden-md"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Danh mục</h4>
+                            <p class="category">Danh sách danh mục</p>
+                            <input id="myInput" type="text" placeholder="Tìm kiếm..">
+                        </div>
+                        <div class="content table-responsive table-full-width">
+                            <table name="tbCat" class="table table-hover table-dark table-striped">
+                                <thead>
+
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Sub Categories</th>
+                                        <th scope="col">Editor</th>
+                                        <th scope="col" class="text-right">
+                                           {{#if isAuthenticated}}  <a class="btn btn-outline-success btn-sm" href="/user/{{authUser.f_ID}}/categories/add  "
+                                                role="button" title="Add">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                                Add Category
+                                            </a> {{/if}}
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="tbcats">
+                                    {{#each lcCategories}}
+                                    <tr class='clickable-row' data-href="/categories/edit/{{cat_id}}">
+                                        <th scope="row">{{cat_id}}</th>
+                                        <td>{{cat_name}}</td>
+                                        <td>{{#each subcats}}{{subcat_name}}, {{/each}}</td>
+                                        <td>{{userName}}</td>
+                                        <td class="text-right">
+                                            <a class="btn btn-primary btn-sm" href="/categories/edit/{{cat_id}}"
+                                                role="button" title="Edit">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </a>
+                                            <a class="btn btn-success btn-sm" href="/categories/add/{{cat_id}}"
+                                                role="button" title="Add Sub Category">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                        <script>
+                                            $("#tbCat").on('click-row.bs.table', function (e, row, $element) {
+                                                window.location = $element.data('href');
+                                            });
+                                        </script>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+
+</div>
+</div>
+</div>
+</div>
+
+</body>
+
+</html>

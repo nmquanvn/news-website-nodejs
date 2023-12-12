@@ -1,0 +1,142 @@
+    <div class="main-panel">
+		<nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">{{authUser.f_Name}}</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    
+
+                    <ul class="nav navbar-nav navbar-right">
+                       
+                       
+                        <li>
+                            <a href="/account/logout">
+                                <p>Log out</p>
+                            </a>
+                        </li>
+						<li class="separator hidden-lg hidden-md"></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Profile</h4>
+                            </div>
+                            <div class="content">
+                                <form method="POST" action="/user/edit/user/{{entity.f_ID}}">
+                                            <div class="form-group">
+                                                <label>Username</label>
+                                                <input readonly type="text" class="form-control" name="f_UserName" placeholder="Username" value="{{entity.f_Username}}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Email address</label>
+                                                <input type="email" class="form-control" name="f_Email" placeholder="Email" value="{{entity.f_Email}}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Full Name</label>
+                                                <input type="text" class="form-control" name="f_Name" placeholder="Company" value="{{entity.f_Name}}">
+                                            </div>
+                                        
+                                            <div class="form-group">
+                                                <label>Date of birth</label>
+                                                <input type="text" class="form-control" name="f_DOB" placeholder="Company" value="{{entity.f_DOB}}">
+                                                <input type="hidden" name="f_ID" value="{{entity.f_ID}}">
+                                                {{#if adminedit}}
+                                                {{else}}
+                                                <input type="hidden" name="f_Permission" value="{{entity.f_Permission}}">
+                                                 <input type="hidden" name="f_Pic" value="{{entity.Pic}}">
+                                                 {{/if}}
+                                            </div>
+                
+                                            {{#if adminedit}}
+                                            <div class="form-group">
+                                                <label>Phân quyền :</label>
+                                                <select id="permissions" name="f_Permission">
+                                                    {{#each lcUsers}}
+                                                    <option value="{{per_id}}">{{per_name}}</option>
+                                                    {{/each}}
+                                                </select>
+                                                <script>
+                                                    document.getElementById('permissions').value={{entity.f_Permission}};
+                                                </script>
+                                            </div>
+                                            {{/if}}
+                                            
+                                    
+                                   
+
+                                   
+
+                               <center> <button type="submit" class="btn btn-info btn-fill ">Update Profile</button></center>    
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-user">
+                            <div style="height: 200px" class="image">
+                                <img src="/pic/{{entity.Pic}}" alt="..."/>
+                                
+                            </div>
+                            {{#if adminedit}}
+                            {{else}}
+                            <form  method="POST"  enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="example-input-file" >&nbsp;</label>
+                        <input type="file" name="file" class="form-control-file border">
+                    </div>
+                    <center><button formaction="/user/{{entity.f_ID}}/profile/image" class="btn btn-info btn-fill pull-center">Submit</button></center>    
+                </form>
+                {{/if}}
+                            <div class="content">
+                                <div >
+                                     <a href="#">
+                                    <img class="avatar border-gray" src="http://localhost:3000/pic/{{entity.Pic}}" alt="..."/>
+                                                
+                                      
+                                    </a>
+                                   
+                                    <h4 >{{entity.f_Name}}<br />
+                                    <small>{{entity.f_DOB}}</small>
+                                       {{entity.f_Email}}
+                                      </h4>
+                                </div>
+                                
+                            </div>
+                            <hr>
+                            <div class="text-center">
+                                <button href="#" class="btn btn-simple"><i class="fa fa-facebook-square"></i></button>
+                                <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>
+                                <button href="#" class="btn btn-simple"><i class="fa fa-google-plus-square"></i></button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+</body>
+</html>

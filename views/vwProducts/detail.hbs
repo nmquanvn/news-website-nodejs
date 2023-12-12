@@ -1,0 +1,136 @@
+
+<style>
+   #d {
+    
+    width:350px;
+    box-shadow:  5px 5px 5px thistle;
+   font-weight: bold;
+   margin: 25px
+   
+}</style>
+<script>
+   function check_submit_addnew()
+{
+   var frm = window.document.set;         
+   if(frm.username.value=='')
+   {
+      alert('Xin vui lòng Đăng nhập để comment!');           
+      document.forms['set'].username.focus();
+      return false;
+   }
+   else
+   if(frm.comment.value=='')
+   {
+      alert('Xin vui lòng nhập comment !');           
+      document.forms['set'].comment.focus();
+      return false;
+   }
+  
+ 
+   else        
+   {
+       alert('please wait!');
+       return true;   
+
+   }               
+      
+}
+</script>
+<div class="card shadow">
+  <h5 class="card-header">
+    Product
+  </h5>
+  <div class="card-body">
+    {{#if this.error}}
+    <div class="alert alert-danger" role="alert">
+      Invalid productId. <a href="/" class="alert-link">Go home</a>.
+    </div>
+    {{else}}
+      {{#each this.k}}
+      <img src={{pic}} alt="{{ProName}}" class="card-img-top">
+      
+      <h6>                            </h6>
+  {{/each}}
+    {{#with this.product}}
+    <div class="card border-0">
+    
+      <div class="card-body">
+        <h2 class="card-title">{{ProName}}</h2>
+       
+        <p class="card-text">
+          {{{FullDes}}}
+        </p>
+        <p class="card-text text-muted">
+          <small>{{CreatedAt}}</small>
+         
+        </p>
+      </div>
+    </div>
+    {{/with}}
+    {{#each Tag}}
+    <span  class="badge badge-light"><a href="/categories/tag/{{tagID}}" style="float:left"> {{tagName}}</a></span>  {{/each}}
+    {{/if}}
+    {{#each showcmt}}
+     <form >
+   <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">{{f_Name}}</label>
+    <div class="col-sm-10">
+      <input type="text"  readonly class="form-control-plaintext" id="staticEmail" value="{{Content}}">
+      <small style="float:right"><span>{{CreatedAt}}</span></small>
+    </div>
+    
+  </div>
+  
+  </form>
+  {{/each}}
+    <form name="set" method="POST" onsubmit="return check_submit_addnew()" >
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text" name="username" readonly class="form-control-plaintext" id="staticEmail" value="{{authUser.f_Name}}">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-2 col-form-label">Comment</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control"  name="comment" placeholder="comment">
+    </div>
+  </div>
+   <div class="flex-fill ml-1">
+              <button class="btn btn-info btn-lg btn-block" type="submit">
+                <i class="fa fa-sign-in" aria-hidden="true"></i>
+               Comment 
+              </button>
+            </div>
+</form>
+
+<div class="card-body">
+ 
+  
+<div class="card-header"><center>RELATED</center></div>
+  <div class="row">
+ {{#each productRelate}}
+     
+      <div  id="d"class="row" >
+		<div class="col-md-6" >
+			<a  href="/products/sp/{{ProID}}">
+				<img class="img-fluid" src="{{pic}}" width="150" height="120">
+			</a>
+		</div>
+		<div  class="col-md-6">
+			
+			<a style="color:black"  href="/products/sp/{{ProID}}" ><h3>{{ProName}}</h3>
+			
+			<p>{{TinyDes}}</p></a>
+       <small>{{CreatedAt}}</small>
+		</div>
+	</div>
+      
+  {{/each}}
+  </div>
+ 
+ 
+</div>
+  </div>
+  
+</div>
